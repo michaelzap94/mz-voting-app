@@ -17,7 +17,7 @@ var User = require("./schemas/user");
 
 // Set the environment variable for DB.
 
-var url = process.env.DATABASEURL || "mongodb://localhost/mz-voting-app-db";
+var url = process.env.DATABASEURLVA || "mongodb://localhost/mz-voting-app-db";
 mongoose.connect(url);
 
 
