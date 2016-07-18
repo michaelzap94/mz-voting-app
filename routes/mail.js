@@ -42,11 +42,11 @@ var transporter = nodemailer.createTransport({
    var text = 'Hello world from';
    var mailOptions = {
     from: {
-    name: 'Michael Zapata',
+    name: 'mz-voting-app',
     address: process.env.EMAIL}, // sender address
         to : username,
   subject : "Please click on the following link to change your password",
-        html : "Hello,<br> Please Click on the link to change your password.<br><a href="+link+">Click here to change your password</a>" 
+        html : "<h1>Hello from mz-voting-app,</h1><br><p>Please Click on the link to change your password.</p><br><a href="+link+">Click here to change your password</a>" 
 };
 transporter.sendMail(mailOptions, function(error, info){
     if(error){
