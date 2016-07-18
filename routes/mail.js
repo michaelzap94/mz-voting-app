@@ -51,10 +51,11 @@ var transporter = nodemailer.createTransport({
 transporter.sendMail(mailOptions, function(error, info){
     if(error){
         console.log(error);
-        res.json({yo: 'error'});
+        res.json({error: 'error'});
     }else{
         console.log('Message sent: ' + info.response);
-        res.json({yo: info.response});
+        req.flash("success","Email sent successfully. Please check your email.")
+        res.redirect("/");
     };
 });
       
