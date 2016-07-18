@@ -33,8 +33,8 @@ function handleEmail(req, res,username,id) {
 var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'michaelzap94@gmail.com', // Your email id
-            pass: 'Hilary1240h' // Your password
+            user: process.env.EMAIL, // Your email id
+            pass: process.env.EPASSWORD// Your password
         }
     });
       var link="http://"+req.get('host')+"/newPassword?"+"id="+id+"&token="+token;
@@ -43,7 +43,7 @@ var transporter = nodemailer.createTransport({
    var mailOptions = {
     from: {
     name: 'Michael Zapata',
-    address: 'michaelzap94@gmail.com'}, // sender address
+    address: process.env.EMAIL}, // sender address
         to : username,
   subject : "Please click on the following link to change your password",
         html : "Hello,<br> Please Click on the link to change your password.<br><a href="+link+">Click here to change your password</a>" 

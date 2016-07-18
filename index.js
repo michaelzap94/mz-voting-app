@@ -10,22 +10,12 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-
-//SCHEMAS modules
 var User = require("./schemas/user");
 
 
-/*
-////////SEEDDB
-//var seedDB = require("./seeds");
-//seedDB();
-*/
 
 
-
-// Set the environment variable.
-// local: export DATABASEURL = mongodb://localhost/yelp_camp_v6
-// ONLINE: heroku config:set DATABASEURL=mongodb://michael:mike@ds011785.mlab.com:11785/yelpcamp
+// Set the environment variable for DB.
 
 var url = process.env.DATABASEURL || "mongodb://localhost/mz-voting-app-db";
 mongoose.connect(url);
@@ -96,9 +86,6 @@ app.use(userAuthenRoutes);
 var pollsRoutes = require("./routes/polls");
 app.use(pollsRoutes);
 
-//var mail = require("./routes/mail")
-/*
-app.use(mail);*/
 
 
 
