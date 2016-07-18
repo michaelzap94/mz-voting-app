@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
-
   },
   "repository": {
     "type": "git",
@@ -20,12 +19,15 @@
   "homepage": "https://github.com/michaelzap94/mz-voting-app#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "chart.js": "^2.1.6",
     "connect-flash": "^0.1.1",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
     "method-override": "^2.3.6",
     "mongoose": "^4.5.3",
+    "nodemailer": "^2.5.0",
+    "nodemailer-smtp-transport": "^2.6.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.0.0"

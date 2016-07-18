@@ -1,0 +1,48 @@
+<% include ./partials/header.ejs %>
+<div class="container">
+         <header class="jumbotron">
+         <div class="container">
+             <h2>DASHBOARD</h2>
+             <p>You can view your polls, You can delete your polls, You can create new polls</p>
+             <p>What would you like to do today?</p>
+
+             <p>
+                <a class="btn btn-success btn-large" href="/dashboard/new"><span class="glyphicon glyphicon-user"></span>Create a new poll</a></a>
+             </p>
+         </div>
+     </header>
+        
+</div>
+
+
+ <div class="container">
+     <div class="list-group">
+
+                   <% if(userPollsRet){ 
+        userPollsRet.forEach(function(userPoll){
+   %>
+                  
+                         <a class="list-group-item clearfix" href="/dashboard/<%=userPoll._id%>">
+                              <span class="pull-left">
+                             <strong class="list-group-item-heading"><%= userPoll.title%></strong>
+                            <p class="list-group-item-text">
+                                <%= userPoll.description%>
+                            </p>
+                            </span>
+                             <span class="pull-right">
+                
+                            <form id="delete-form" method="POST" action="/dashboard/<%=userPoll._id%>?_method=DELETE">
+                                 <button class="btn btn-danger">Delete Poll</button>
+                            </form>
+                              
+                              </span>
+                            
+                           </a>
+                    
+                              
+                                <% }); } %>
+              </div>
+</div>
+
+
+<% include ./partials/footer.ejs %>

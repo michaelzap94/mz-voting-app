@@ -1,0 +1,120 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+   position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+    min-height: 100%;
+    
+
+background: #4CB8C4; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #4CB8C4 , #3CD3AD); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #4CB8C4 , #3CD3AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+}
+.jumbotron{
+
+background: #403B4A; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #403B4A , #E7E9BB); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #403B4A , #E7E9BB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+}
+ul.entries{
+    /***********************/
+    list-style: none;
+    /************************/
+    
+
+}
+
+.entries li{
+    background: whitesmoke;
+    padding: 20px;
+    margin: 10px;
+}
+.entries a:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+.entries a:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+.entries li:hover{
+    background: steelblue;
+}
+.formsStyle{
+    max-width: 500px;
+    margin:0 auto;
+}
+
+
+ul {
+  list-style: none;
+}
+ul li {
+  display: block;
+  padding-left: 30px;
+  position: relative;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 2px 8px 2px 28px;
+  font-size: 14px;
+  cursor: default;
+  -webkit-transition: background-color 200ms ease-in-out;
+  -moz-transition: background-color 200ms ease-in-out;
+  -o-transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
+}
+li span {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  border-radius: 5px;
+}
+
+    #buttomPage{
+
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+    padding: 0rem;
+    background-color: #286090 ;
+    text-align:center;
+    color: whitesmoke;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+}
+/*
+#showPollContainer{
+    height: 100%;
+}
+*/
+#canvasId{
+    margin-top: 10px;
+height: 250px;
+max-width: 250px;
+    width: 100%;
+}
+
+
+.features{
+    font-size:24px;
+}
+

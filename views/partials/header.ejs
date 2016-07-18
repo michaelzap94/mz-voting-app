@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Case</title>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <link rel="stylesheet" href="/main.css">
+
+        <script type='text/javascript' src="/main.js"></script>
+
+
+
+  
+</head>
+<body>
+
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+ <a href="/" class="navbar-brand" style="font-size: x-large"><strong>Home</strong></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+            <li><a href="/allpolls">All Polls</a></li>
+              <% if(currentUser){ %>
+
+            <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/dashboard">My Polls</a></li>
+            <li><a href="/dashboard/new">New Poll</a></li>
+          </ul>
+        </li>
+            <% } %>
+      </ul>
+                    <% if(!currentUser){ %>
+             <ul class="nav navbar-nav navbar-right">
+                    
+                    <li class=" dropdown">
+                    <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Forgot your Password?</a>
+                    <ul class="dropdown-menu" style="padding:18px;">
+                        <li><a>Check your mail to reset your password.</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <form action="/newPassword/email" method="POST">
+                            <div class="form-group">
+                            <input type="text" placeholder="Email" name="username" class="form-control">
+                            </div>
+
+                            <button type="submit" class="btn btn-success  btn-block">Request new Password</button>
+                     </form>
+
+                    </ul>
+                    </li>
+                  
+
+              </ul>
+
+    <form action="/login" method="POST" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span> Login</a></button>
+            </form>
+                                    <% } else { %>
+           <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Signed In As <%= currentUser.details[0].name %></a></li>
+              
+              
+                  <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Options<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <li><a href="/newPassword/<%=currentUser._id%>">Change your Password</a></li>
+            <li><a href="/logout">Logout</a></li> 
+            </ul>
+        </li>
+                        
+                        
+                        
+                    <% } %>
+          </ul>
+    </div>
+  </div>
+</nav>
+<!-------------------------------------------->
+   <br>
+   <br>
+   <br>
+
+    <div class="container">
+        <% if(error && error.length>0){ %>
+            <div class="alert alert-danger" role="alert"><%=error%></div>
+            
+                    <% }if(success && success.length>0){ %>
+            <div class="alert alert-success" role="alert"><%=success%></div>
+
+                    <% } %>
+
+    </div>

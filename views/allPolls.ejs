@@ -1,0 +1,37 @@
+<% include ./partials/header.ejs %>
+         <header class="container">
+         <div class="container">
+             <h1>All the polls created by users.</h1>
+             <% if(currentUser){ %>
+                <a class="btn btn-success btn-large" href="/dashboard/new"><span class="glyphicon glyphicon-user"></span>Create a new poll</a></a>
+                 
+             <% } else{%>
+             <h2>You can create your own, just Log In or <a href="/register">Sign Up</a></h2>
+             <% }%>
+       </div>
+     </header>
+     <br>
+        
+<div class="container">
+<div class="list-group">
+   
+         <% if(pollsRet){ 
+        pollsRet.forEach(function(singlePoll){
+   %>
+                  
+                           <a href="/dashboard/<%=singlePoll._id%>" class="list-group-item"><strong class="list-group-item-heading"><%= singlePoll.title%></strong>
+                            <p class="list-group-item-text">
+                                <%= singlePoll.description%>
+                            </p>
+                           </a>
+                            
+                                <% }); } %>
+
+
+
+
+   
+  </div>
+</div>
+<% include ./partials/footer.ejs %>
+

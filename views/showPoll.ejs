@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Case</title>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="/main.css">
+
+<style>
+body{
+    
+
+background: #4CB8C4; /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #4CB8C4 , #3CD3AD); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #4CB8C4 , #3CD3AD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+}
+
+</style>
+
+
+  
+</head>
+<body>
+
+<nav class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+ <a href="/" class="navbar-brand" style="font-size: x-large"><strong>Home</strong></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+            <li><a href="/allpolls">All Polls</a></li>
+              <% if(currentUser){ %>
+
+            <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/dashboard">My Polls</a></li>
+            <li><a href="/dashboard/new">New Poll</a></li>
+          </ul>
+        </li>
+            <% } %>
+      </ul>
+                    <% if(!currentUser){ %>
+
+    <form action="/login" method="POST" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span> Login</a></button>
+            </form>
+                                    <% } else { %>
+           <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Signed In As <%= currentUser.details[0].name %></a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    <% } %>
+          </ul>
+    </div>
+  </div>
+</nav>
+<!-------------------------------------------->
+   <br>
+   <br>
+   <br>
+
+    <div class="container">
+        <% if(error && error.length>0){ %>
+            <div class="alert alert-danger" role="alert"><%=error%></div>
+            
+                    <% }if(success && success.length>0){ %>
+            <div class="alert alert-success" role="alert"><%=success%></div>
+
+                    <% } %>
+
+    </div>
+
+<div class="container" id="showPollContainer">
+    <div style="margin:0 auto ; width:90%; max-width:500px" >
+        <div class="well" style="margin-top:30px">
+               <h1><strong>Title: </strong><%=showOnePoll.title%></h1>
+                <h3><strong>Description: </strong><%=showOnePoll.description%><h3>
+               <p><strong>Author: </strong><%=showOnePoll.author.name%> <%=showOnePoll.author.surname%><p>
+      </div>
+    </div>
+           
+            
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-sm-6">
+                    
+                      <h2>I would like to vote for:</h2>
+                      <form style="width:90%; max-width:450px" id="submitVoteForm" action="/dashboard/<%=showOnePoll._id%>/vote" method="POST" role="form">
+                        <div class="form-group">
+                          <label for="sel1">Select list (select one):</label>
+                          <select name="optionSubmitted" class="form-control" id="sel1">
+                            <%showOnePoll.optionsArray.forEach(function(pollElem){ %>
+                              
+                              <option value="<%=pollElem._id%>"><%= pollElem.label %></option>
+                              
+                            <% });%>
+                            
+                           
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Vote</button>
+                        
+                        <a href="https://twitter.com/intent/tweet?url=https://fcc-back-end-michaelzap94.c9users.io/dashboard/<%=showOnePoll._id%>&text=Check out my Poll: <%=showOnePoll.title%>" target="_blank" class="btn btn-info btn-block"><i class="fa fa-twitter"></i>Share on Twitter</a>
+                    </form>
+
+                </div>
+                <div class="col-sm-6">
+                      <div id="chart-area" class="row">
+                        <div class="col-sm-9">
+                            
+                            <canvas id="canvasId" ></canvas>
+                        </div>
+
+                          <div id="legend" class="col-sm-3"></div>
+                          <script>
+                          
+                         
+                              
+                               var pieData = <%-JSON.stringify(showOnePoll.optionsArray)%>;
+                         
+                          
+                          
+                         var helpers = Chart.helpers;
+
+                            var pieOptions = {
+                                
+                            	segmentShowStroke : true,
+                            	animateScale : true,
+                                 tooltipTemplate: "\<\%if (label){ \%\>\<\%\=label \%\>: \<\% } \%\>\<\%\= value \%\> VOTES",
+
+                            
+                            	}
+                            
+                            var countries= document.getElementById("canvasId").getContext("2d");
+                            var lineChart = new Chart(countries).Doughnut(pieData, pieOptions);
+                              //document.getElementById("legend").innerHTML = lineChart.generateLegend();
+                              
+                              var legendHolder = document.createElement('div');
+                            legendHolder.innerHTML = lineChart.generateLegend();
+                            
+                            document.getElementById('legend').appendChild(legendHolder.firstChild);
+                          </script> 
+                      </div>
+                </div>
+                    
+                </div>
+            </div>
+           
+       
+</div>
+<script src="/main.js"></script>
+
+<% include ./partials/footer.ejs %>
