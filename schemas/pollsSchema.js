@@ -27,7 +27,7 @@ var pollsSchema = new mongoose.Schema({
             ref: "User"
         },
         username: String,
-         ipAddress:String
+         ipAddress: {type: String, default: "None"}
        
     }]
 });
