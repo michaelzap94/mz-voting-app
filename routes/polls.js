@@ -3,7 +3,15 @@ var router = express.Router({mergeParams: true});//parameters in routes cannot b
 var passport = require("passport");
 var User = require("../schemas/user");
 var Poll = require("../schemas/pollsSchema");
+var cookieParser = require('cookie-parser');
 
+var optionsCookie = {
+    maxAge: 1000 * 60 * 1500000, // would expire after 15 minutes
+    httpOnly: true, // The cookie only accessible by the web server
+    signed: true // Indicates if the cookie should be signed
+}
+
+    
 
 //GET ALL POLLS
 router.get("/allpolls",function(req,res){
@@ -154,35 +162,39 @@ function isLoggedIn(req, res, next){
 //////////////
 function oneVote(req,res,next){
 
-        Poll.findById(req.params.id, function(err, showOnePoll){
-            var currentIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-            
-
-             if(showOnePoll.voters.length > 0){
-               for (var i = 0; i < showOnePoll.voters.length; i++){
-                    if(currentIp===showOnePoll.voters[i].ipAddress){
-                        req.flash("error","You have already voted.");
-                        res.redirect("back");
-                    }
-                    else{
-                        if(req.user){
-                            if(req.user._id.equals(showOnePoll.voters[i].id)){
-                        req.flash("error","You have already voted.");
-                                 res.redirect("back");
-                            }else{
-                                next();
-                            }
-                        }
-                        next();
-                    }
+        if(req.cookies.voted!=undefined){
+               req.flash("error","You have already voted Homito(a).");
+               res.redirect("back");
+        }else{
+            Poll.findById(req.params.id, function(err, showOnePoll){
+            //    var currentIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
                 
-              }
-               
-             }else{
-              next();
+                 if(showOnePoll.voters.length > 0){
+                   for (var i = 0; i < showOnePoll.voters.length; i++){
+                        // if(currentIp===showOnePoll.voters[i].ipAddress){
+                        //     req.flash("error","You have already voted.");
+                        //     res.redirect("back");
+                        // }
+                        // else{
+                            if(req.user){
+                                if(req.user._id.equals(showOnePoll.voters[i].id)){
+                                     req.flash("error","You have already voted.");
+                                     res.redirect("back");
+                                }else{
+                                    next();
+                                }
+                            }
+                            //next();
+                       // }
+                    
+                  }
+                   
+                 }else{
+                  next();
+            }
+                
+            });
         }
-            
-        });
     
 }
 
@@ -207,12 +219,12 @@ router.post("/dashboard/:id/vote",oneVote,function(req,res){
                             //if user is authenticated register vote with user credentials else just ip address
                             
                             if(req.isAuthenticated()){ //comes with "passport package"
-                                   showOnePoll.voters.push({id:req.user._id,username:req.user.username,ipAddress:req.headers['x-forwarded-for'] || req.connection.remoteAddress,});
+                                   showOnePoll.voters.push({id:req.user._id,username:req.user.username});
         
                                }
                                 else{
-                                     showOnePoll.voters.push({ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress});
-        
+                                    
+                                   res.cookie('voted', 'true', optionsCookie)
                                 }
                              /////////////////////////////////////////////////////////////////////
                     
