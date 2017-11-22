@@ -3,12 +3,10 @@ var router = express.Router({mergeParams: true});//parameters in routes cannot b
 var passport = require("passport");
 var User = require("../schemas/user");
 var Poll = require("../schemas/pollsSchema");
-var cookieParser = require('cookie-parser');
 
 var optionsCookie = {
     maxAge: 1000 * 60 * 1500000, // would expire after 15 minutes
     httpOnly: true, // The cookie only accessible by the web server
-    signed: true // Indicates if the cookie should be signed
 }
 
     

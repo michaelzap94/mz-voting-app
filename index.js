@@ -12,7 +12,8 @@ app.use(methodOverride("_method"));
 app.use(flash());
 var User = require("./schemas/user");
 
-
+var cookieParser = require('cookie-parser');
+app.use(cookieParser())
 
 
 // Set the environment variable for DB.
